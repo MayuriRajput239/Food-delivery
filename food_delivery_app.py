@@ -97,16 +97,17 @@ with tabs[4]:
 # ---------- 6. accept order ----------
 with tabs[5]:
     st.subheader("Accept Order")
-    new_orders = {f"Order #{o._order_id} ({c._name})": o
-                  for c, o in ss.orders if o._status == "Placed"}
-    free = [n for n, p in ss.partners.items() if p.is_available]
+    new_orders = {
+     f"Order #{o._order_id} ({c._name})": o
+     for c, o in ss.orders if o._status == "Placed"}
+    free = [n for n, p in ss.partners.items()if p.is_available]
     if new_orders and free:
         o_label = st.selectbox("Order", list(new_orders))
-        p_name = st.selectbox("Delivery partner", free)
+        p_name = st.selectbox("Delivery partner",free)
         if st.button("Accept order"):
-            ss.partners[p_name].accept_order(new_orders[o_label])
-            st.success(f"{p_name} accepted {o_label}.")
-            st.rerun()
+           ss.partners[p_name].accept_order(new_orders[o_label])
+           st.success(f"{p_name} accepted {o_label}.")
+           st.rerun()
     else:
         st.info("Need at least one placed order and one available partner.")
 
@@ -114,7 +115,7 @@ with tabs[5]:
 with tabs[6]:
     st.subheader("Enter OTP & Complete Delivery")
     active = {f"Order #{o._order_id} ({c._name}) – {o._status}": o
-              for c, o in ss.orders if o._status == "Order Accepted"}
+              for c, o in ss.orders if o._status == "Accepted"}
     busy = [n for n, p in ss.partners.items() if not p.is_available]
     if active and busy:
         o_label = st.selectbox("Order", list(active), key="d_order")
